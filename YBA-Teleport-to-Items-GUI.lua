@@ -1,3 +1,5 @@
+-- loadstring(game:HttpGet("https://raw.githubusercontent.com/Vuffi2007/YBA-Teleport-to-Items-GUI/main/YBA-Teleport-to-Items-GUI.lua"))()
+
 -- Instances:
 
 local ScreenGui = Instance.new("ScreenGui")
@@ -34,7 +36,7 @@ Bottomtext.BorderSizePixel = 0
 Bottomtext.Position = UDim2.new(0.0851010829, 0, 0.86340785, 0)
 Bottomtext.Size = UDim2.new(0, 200, 0, 21)
 Bottomtext.Font = Enum.Font.SourceSansSemibold
-Bottomtext.Text = "Made by Vuffi"
+Bottomtext.Text = "Made by Vuffi on Discord"
 Bottomtext.TextColor3 = Color3.fromRGB(101, 24, 107)
 Bottomtext.TextSize = 14.000
 
@@ -66,7 +68,7 @@ toggleSelling.BorderSizePixel = 0
 toggleSelling.Position = UDim2.new(0.115576386, 0, 0.601647317, 0)
 toggleSelling.Size = UDim2.new(0, 185, 0, 40)
 toggleSelling.Font = Enum.Font.SourceSansSemibold
-toggleSelling.Text = "Toggle selling"
+toggleSelling.Text = "Toggle selling: off"
 toggleSelling.TextColor3 = Color3.fromRGB(101, 24, 107)
 toggleSelling.TextScaled = true
 toggleSelling.TextSize = 14.000
@@ -83,7 +85,7 @@ tpToItems.BorderSizePixel = 0
 tpToItems.Position = UDim2.new(0.115576386, 0, 0.336887568, 0)
 tpToItems.Size = UDim2.new(0, 185, 0, 40)
 tpToItems.Font = Enum.Font.SourceSansSemibold
-tpToItems.Text = "TP to items"
+tpToItems.Text = "TP to items: off"
 tpToItems.TextColor3 = Color3.fromRGB(101, 24, 107)
 tpToItems.TextScaled = true
 tpToItems.TextSize = 14.000
@@ -155,8 +157,6 @@ local function QLMOT_fake_script() -- ScreenGui.LocalScript
 	end
 	
 	function maxItems()
-		local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
-		local merchant = game.Workspace.Dialogues["ShiftPlox, The Travelling Merchant"]
 	
 		items = {
 			["Mysterious Arrow"] = 0,
@@ -176,7 +176,7 @@ local function QLMOT_fake_script() -- ScreenGui.LocalScript
 			["Gold Umbrella"] = 0
 		}
 	
-		local maxLimits = {
+		local maxLimits = {  -- Add to the list if I missed an item
 			["Mysterious Arrow"] = 25,
 			["Rokakaka"] = 25,
 			["Gold Coin"] = 45,
@@ -191,7 +191,11 @@ local function QLMOT_fake_script() -- ScreenGui.LocalScript
 			["Dio's Diary"] = 10,
 			["Pure Rokakaka"] = 999,
 			["Lucky Stone Mask"] = 999,
-			["Gold Umbrella"] = 999
+			["Lucky Arrow"] = 999,
+			["Gold Umbrella"] = 999,
+			["Left Arm of The Saint's Corpse"] = 999,
+			["Heart of The Saint's Corpse"] = 999,
+			["Pelvis of The Saint's Corpse"] = 999
 		}
 	
 		for _, item in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
@@ -224,6 +228,11 @@ local function QLMOT_fake_script() -- ScreenGui.LocalScript
 	local sellingButton = script.Parent.Frame.toggleSelling
 	sellingButton.MouseButton1Click:Connect(function()
 		sell = not sell
+		if sell then
+			sellingButton.Text = "Toggle selling: on"
+		else
+			sellingButton.Text = "Toggle selling: off"
+		end
 		maxItems()
 	end)
 	
@@ -231,7 +240,10 @@ local function QLMOT_fake_script() -- ScreenGui.LocalScript
 	tpButton.MouseButton1Click:Connect(function()
 		tpOn = not tpOn
 		if tpOn then
+			tpButton.Text = "Tp to items: on"
 			coroutine.wrap(mainTP)()
+		else
+			tpButton.Text = "Tp to items: off"
 		end
 		print("TP to items is now " .. tostring(tpOn))
 	end)
